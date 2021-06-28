@@ -1,8 +1,16 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom'
+import GlobalStyles from './global';
+import Routes from './routes';
 
 const App = (): React.ReactElement  => {
   return (
-    <h1>PruuChat</h1>
+    <>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+      <GlobalStyles />
+    </>
   );
 }
 
