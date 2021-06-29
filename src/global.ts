@@ -6,6 +6,8 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+    --primary-color: #781EBE;
+    --light-gray: #F2F2F2;
   }
 
   body {
