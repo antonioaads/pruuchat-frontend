@@ -1,10 +1,10 @@
-import "./styles.css";
+import { HeaderContainer } from "./styles";
 import logo from "../../assets/logo.svg";
 import Avatar from "../../components/Avatar";
 
 const Header = (): React.ReactElement => {
   return (
-    <div className="header-container">
+    <HeaderContainer>
       <img src={logo} alt="Logo PruuChat" className="logo" />
       <div className="user-logged-container">
         <span className="fullname">Guilherme Giacomin</span>
@@ -13,7 +13,7 @@ const Header = (): React.ReactElement => {
           profilePictureUrl="https://avatars.githubusercontent.com/u/54778237?v=4"
         />
       </div>
-    </div>
+    </HeaderContainer>
   );
 };
 

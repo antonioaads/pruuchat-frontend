@@ -1,4 +1,4 @@
-import "./styles.css";
+import { Container } from "./styles";
 
 interface AvatarProps {
   fullName: string;
@@ -16,7 +16,7 @@ const getInitials = (fullName: string): string => {
 
 const Avatar = (props: AvatarProps): React.ReactElement => {
   return (
-    <>
+    <Container>
       {props.profilePictureUrl ? (
         <img
           src={props.profilePictureUrl}
@@ -26,7 +26,7 @@ const Avatar = (props: AvatarProps): React.ReactElement => {
       ) : (
         <span className="avatar-initials">{getInitials(props.fullName)}</span>
       )}
-    </>
+    </Container>
   );
 };
 
