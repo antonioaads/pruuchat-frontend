@@ -17,8 +17,8 @@ const CoreInput = styled.input`
     height: 50px;
     border-radius: 25px;
 
-    background-color: #FCFCFC;
-    color: #939393;
+    background-color: var(--color-input-bg);
+    color: var(--color-input-font);
 `;
 
 const SendButton = styled.button`
@@ -28,7 +28,7 @@ const SendButton = styled.button`
     border-radius: 29px;
     padding: 20px 21px;
 
-    background-color: #781EBE;
+    background-color: var(--color-main-pruurple);
 `;
 
 type TextInputProps = {
