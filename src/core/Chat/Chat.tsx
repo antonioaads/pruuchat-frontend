@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChatContainer } from './styles';
 import MessageList from '../../components/MessageList';
-import TextInput from '../../components/TextInput';
+import ChatInput from '../../components/ChatInput';
 import { Message } from '../../components/MessageList/types';
 
 type ChatProps = {
@@ -12,7 +12,7 @@ type ChatProps = {
 const Chat = ({ messageList, onSendClick }: ChatProps): React.ReactElement => (
     <ChatContainer>
         <MessageList messageList={messageList} />
-        <TextInput onSendClick={onSendClick}/>
+        <ChatInput onSendClick={onSendClick}/>
     </ChatContainer>
 );
   
