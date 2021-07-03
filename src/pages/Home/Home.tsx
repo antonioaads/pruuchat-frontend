@@ -1,24 +1,37 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
+import { HomeContainer } from './styles';
 import Header from '../../core/Header';
 import Chat from '../../core/Chat';
+import { Message } from '../../components/MessageList/types';
 
 const Home = (): React.ReactElement => {
-  const [messageList, setMessageList] = useState(messages)
+  const [messageList, setMessageList] = useState(messages);
   
   const _onSendClick = (msg: string) => {
-    setMessageList(messageList.concat({ content: msg, owner: true }))
+    setMessageList(messageList.concat({ content: msg, owner: true }));
+  }
+
+  const _handleImageFile = (file: File) => {
+    // carregar para exibir imagem em um tag img
+    // código apenas "placeholder" pra quando integrar com o back
+    const reader = new FileReader();
+    reader.onload = () => {
+      setMessageList((previousState: Array<Message>): Array<Message> => {
+        return previousState.concat({ content: reader.result || '', owner: true, image: true })
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   return (
-    <Fragment>
+    <HomeContainer>
       <Header />
-      <h1>Home</h1>
-      <Chat messageList={messageList} onSendClick={_onSendClick} />
-    </Fragment>
+      <Chat messageList={messageList} onSendClick={_onSendClick} handleImageFile={_handleImageFile} />
+    </HomeContainer>
   )
 }
 
-const messages = [
+const messages: Array<Message> = [
   { content: 'eae', owner: false},
   { content: 'eae bro', owner: true},
   { content: 'como vai?', owner: false},

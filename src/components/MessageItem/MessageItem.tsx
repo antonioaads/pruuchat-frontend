@@ -1,26 +1,19 @@
-import styled from "styled-components";
+import React from 'react';
+import { MessageContainer, MessageImage } from './styles'
 
 type MessageItemProps = {
     owner?: boolean,
-    last?: boolean
+    last?: boolean,
+    image?: boolean
 };
 
-const MessageItem = styled.li<MessageItemProps>`
-    padding: 10px 20px;
-    width: fit-content;
-    max-width: 400px;
-    word-break: break-word;
-    margin-left: ${props => props.owner ? 'auto' : 'initial'};
-    border-radius: ${
-        props => props.last
-            ? props.owner
-                ? '10px 10px 0px 10px'
-                : '10px 10px 10px 0px'
-            : '10px'
-    };
-
-    background-color: ${props => props.owner ? 'var(--color-main-pruurple)' : 'var(--color-chat-bubble)'};
-    color: ${props => props.owner ? 'var(--color-font-white)' : 'var(--color-font-black)'};
-`;
+const MessageItem = ({owner, last, image, ...props}: MessageItemProps & React.HTMLAttributes<HTMLLIElement>): React.ReactElement => (
+    <MessageContainer owner={owner} last={last} image={image} {...props}>
+        {image
+            ? <MessageImage src={String(props.children)}/>
+            : props.children
+        }
+    </MessageContainer>
+)
 
 export default MessageItem;

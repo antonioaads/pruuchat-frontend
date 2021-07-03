@@ -1,4 +1,5 @@
 export type Message = {
-    content: string,
-    owner: boolean
+    content: string | ArrayBuffer | null,
+    owner?: boolean,
+    image?: boolean
 };
