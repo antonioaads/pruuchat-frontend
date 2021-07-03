@@ -1,5 +1,7 @@
+export type Image = string | ArrayBuffer | null
+
 export type Message = {
-    content: string | ArrayBuffer | null,
-    owner?: boolean,
-    image?: boolean
+    content: string ,
+    image?: Image,
+    owner?: boolean
 };

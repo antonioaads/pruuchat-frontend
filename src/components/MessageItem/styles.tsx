@@ -7,24 +7,38 @@ type MessageContainerProps = {
 };
 
 export const MessageContainer = styled.li<MessageContainerProps>`
-    padding: ${props => props.image ? '15' : '10'}px 20px;
+    display: flex;
+    flex-direction: column;
     width: fit-content;
-    ${props => props.image? '' : 'max-width: 400px;'}
-    word-break: break-word;
-    margin-left: ${props => props.owner ? 'auto' : 'initial'};
+    ${({ image }) => image? '' : 'max-width: 400px;'}
+    
+    padding: ${({ image }) => image ? '15' : '10'}px 20px;
+    margin-left: ${({ owner }) => owner ? 'auto' : 'initial'};
+
     border-radius: ${
-        props => props.last
-            ? props.owner
+        ({ last, owner }) => last
+            ? owner
                 ? '10px 10px 0px 10px'
                 : '10px 10px 10px 0px'
             : '10px'
     };
 
-    background-color: ${props => props.owner ? 'var(--color-main-pruurple)' : 'var(--color-chat-bubble)'};
-    color: ${props => props.owner ? 'var(--color-font-white)' : 'var(--color-font-black)'};
+    word-break: break-word;
+
+    background-color: ${({ owner }) => owner ? 'var(--color-main-pruurple)' : 'var(--color-chat-bubble)'};
+    color: ${({ owner }) => owner ? 'var(--color-font-white)' : 'var(--color-font-black)'};
 `;
 
 export const MessageImage = styled.img`
     max-width: 960px;
     max-height: 540px;
+`
+
+type MessageTextProps = {
+    image?: boolean
+};
+
+export const MessageText = styled.p<MessageTextProps>`
+    margin-top: 5px;
+    ${({ image }) => image ? 'margin-bottom: -5px;' : ''}
 `

@@ -1,21 +1,22 @@
 import React from 'react';
 import { ChatContainer } from './styles';
 import MessageList from '../../components/MessageList';
-import { Message } from '../../components/MessageList/types';
+import { Image, Message } from '../../components/MessageList/types';
 import ChatInput from '../../components/ChatInput';
 import { HandleImageFileType } from '../../components/DropZone/types';
 
 type ChatProps = {
     messageList?: Array<Message>,
     onSendClick?: (message: string) => void,
-    handleImageFile?: HandleImageFileType
+    handleImageFile?: HandleImageFileType,
+    imageToBeSent?: Image
 };
 
-const Chat = ({ messageList, onSendClick, handleImageFile }: ChatProps): React.ReactElement => {    
+const Chat = ({ messageList, onSendClick, handleImageFile, imageToBeSent }: ChatProps): React.ReactElement => {    
     return (
         <ChatContainer>
             <MessageList messageList={messageList} />
-            <ChatInput onSendClick={onSendClick} handleImageFile={handleImageFile}/>
+            <ChatInput onSendClick={onSendClick} handleImageFile={handleImageFile} imageToBeSent={imageToBeSent}/>
         </ChatContainer>
     );
 };

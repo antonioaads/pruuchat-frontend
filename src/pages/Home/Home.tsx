@@ -4,11 +4,22 @@ import Header from '../../core/Header';
 import Chat from '../../core/Chat';
 import { Message } from '../../components/MessageList/types';
 
+type ChatState = {
+  messageList: Array<Message>,
+  currentMessage: Message | null
+}
+
 const Home = (): React.ReactElement => {
-  const [messageList, setMessageList] = useState(messages);
+  const [chatState, setChatState] = useState<ChatState>({ 
+    messageList: messages,
+    currentMessage: null
+  });
   
   const _onSendClick = (msg: string) => {
-    setMessageList(messageList.concat({ content: msg, owner: true }));
+    setChatState(({ messageList, currentMessage }: ChatState) => ({
+        messageList: messageList.concat(currentMessage ? { content: msg, owner: true, image: currentMessage.image } : { content: msg, owner: true }),
+        currentMessage: null
+      }));
   }
 
   const _handleImageFile = (file: File) => {
@@ -16,9 +27,10 @@ const Home = (): React.ReactElement => {
     // código apenas "placeholder" pra quando integrar com o back
     const reader = new FileReader();
     reader.onload = () => {
-      setMessageList((previousState: Array<Message>): Array<Message> => {
-        return previousState.concat({ content: reader.result || '', owner: true, image: true })
-      });
+      setChatState((previousState: ChatState) => ({
+        messageList: previousState.messageList,
+        currentMessage: { content: '', owner: true, image: reader.result }
+      }));
     };
     reader.readAsDataURL(file);
   }
@@ -26,7 +38,12 @@ const Home = (): React.ReactElement => {
   return (
     <HomeContainer>
       <Header />
-      <Chat messageList={messageList} onSendClick={_onSendClick} handleImageFile={_handleImageFile} />
+      <Chat
+        messageList={chatState.messageList}
+        onSendClick={_onSendClick}
+        handleImageFile={_handleImageFile}
+        imageToBeSent={chatState.currentMessage && chatState.currentMessage.image}
+      />
     </HomeContainer>
   )
 }
