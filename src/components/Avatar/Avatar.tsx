@@ -14,17 +14,20 @@ const getInitials = (fullName: string): string => {
     ].charAt(0)}`;
 };
 
-const Avatar = (props: AvatarProps): React.ReactElement => {
+const Avatar = ({
+  fullName,
+  profilePictureUrl,
+}: AvatarProps): React.ReactElement => {
   return (
     <Container>
-      {props.profilePictureUrl ? (
+      {profilePictureUrl ? (
         <img
-          src={props.profilePictureUrl}
+          src={profilePictureUrl}
           alt="Profile picture"
           className="avatar-img"
         ></img>
       ) : (
-        <span className="avatar-initials">{getInitials(props.fullName)}</span>
+        <span className="avatar-initials">{getInitials(fullName)}</span>
       )}
     </Container>
   );

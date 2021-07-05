@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
-  background-color: var(--primary-color);
+  height: var(--header-height);
+  background-color: var(--color-main-pruurple);
   padding: 1em 5em;
   display: flex;
   justify-content: space-between;
@@ -15,7 +16,7 @@ export const HeaderContainer = styled.div`
   }
 
   .user-logged-container .fullname {
-    color: var(--light-gray);
+    color: var(--color-light-gray);
     font-weight: bold;
     font-size: 18px;
   }

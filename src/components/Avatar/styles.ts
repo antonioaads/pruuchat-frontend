@@ -12,8 +12,8 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--light-gray);
-    color: var(--primary-color);
+    background-color: var(--color-light-gray);
+    color: var(--color-main-pruurple);
     font-weight: bold;
   }
 `;
