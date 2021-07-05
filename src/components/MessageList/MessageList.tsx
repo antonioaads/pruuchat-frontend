@@ -21,9 +21,10 @@ const MessageList = ({ messageList }: MessageListProps): React.ReactElement => {
                     <MessageItem
                         key={index}
                         owner={msg.owner}
+                        image={msg.image}
                         last={messageList[index+1] && (messageList[index+1].owner !== msg.owner)}
                     >
-                        {msg.content}
+                        {typeof msg.content === 'string' ? msg.content : ''}
                     </MessageItem>
                 ))
             }

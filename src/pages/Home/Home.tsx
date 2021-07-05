@@ -1,24 +1,54 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
+import { HomeContainer } from './styles';
 import Header from '../../core/Header';
 import Chat from '../../core/Chat';
+import { Message } from '../../components/MessageList/types';
+
+type ChatState = {
+  messageList: Array<Message>,
+  currentMessage: Message | null
+}
 
 const Home = (): React.ReactElement => {
-  const [messageList, setMessageList] = useState(messages)
+  const [chatState, setChatState] = useState<ChatState>({ 
+    messageList: messages,
+    currentMessage: null
+  });
   
   const _onSendClick = (msg: string) => {
-    setMessageList(messageList.concat({ content: msg, owner: true }))
+    setChatState(({ messageList, currentMessage }: ChatState) => ({
+        messageList: messageList.concat(currentMessage ? { content: msg, owner: true, image: currentMessage.image } : { content: msg, owner: true }),
+        currentMessage: null
+      }));
+  }
+
+  const _handleImageFile = (file: File) => {
+    // carregar para exibir imagem em um tag img
+    // código apenas "placeholder" pra quando integrar com o back
+    const reader = new FileReader();
+    reader.onload = () => {
+      setChatState((previousState: ChatState) => ({
+        messageList: previousState.messageList,
+        currentMessage: { content: '', owner: true, image: reader.result }
+      }));
+    };
+    reader.readAsDataURL(file);
   }
 
   return (
-    <Fragment>
+    <HomeContainer>
       <Header />
-      <h1>Home</h1>
-      <Chat messageList={messageList} onSendClick={_onSendClick} />
-    </Fragment>
+      <Chat
+        messageList={chatState.messageList}
+        onSendClick={_onSendClick}
+        handleImageFile={_handleImageFile}
+        imageToBeSent={chatState.currentMessage && chatState.currentMessage.image}
+      />
+    </HomeContainer>
   )
 }
 
-const messages = [
+const messages: Array<Message> = [
   { content: 'eae', owner: false},
   { content: 'eae bro', owner: true},
   { content: 'como vai?', owner: false},
