@@ -1,9 +1,14 @@
 import React, { useEffect, useRef } from "react";
+import styled from "styled-components";
 import { HandleImageFileType } from "./types";
 
 type DropZoneProps = {
     handleImageFile?: HandleImageFileType
 }
+
+const DropZoneContainer = styled.span`
+    z-index: 1000;
+`
 
 const DropZone = (props: DropZoneProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement => {
     const zoneRef = useRef<HTMLDivElement>(null);
@@ -13,9 +18,9 @@ const DropZone = (props: DropZoneProps & React.HTMLAttributes<HTMLDivElement>): 
     }, [])
 
     return (
-        <span ref={zoneRef}>
+        <DropZoneContainer ref={zoneRef}>
             {props.children}
-        </span>
+        </DropZoneContainer>
     );
 }
 

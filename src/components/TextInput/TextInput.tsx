@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const TextInput = styled.input`
+    min-width: 129px;
     flex: 4;
     padding: 0px 25px;
     border: none;

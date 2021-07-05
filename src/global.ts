@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
+    overflow: hidden;
     background: #FFFFFF;
     color: #29292e;
     -webkit-font-smoothing: antialiased;

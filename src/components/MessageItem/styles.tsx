@@ -39,6 +39,6 @@ type MessageTextProps = {
 };
 
 export const MessageText = styled.p<MessageTextProps>`
-    margin-top: 5px;
+    margin-top: 2px;
     ${({ image }) => image ? 'margin-bottom: -5px;' : ''}
 `
