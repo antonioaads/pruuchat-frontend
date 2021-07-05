@@ -67,14 +67,14 @@ function validateImage(file: File) {
     // verificar tipo
     const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (validTypes.indexOf( file.type ) === -1) {
-        console.log("Invalid File Type");
+        console.error("Invalid File Type");
         return false;
     }
  
     // verificar tamanho
     const maxSizeInBytes = 10e6; // 10MB
     if (file.size > maxSizeInBytes) {
-        console.log("File too large");
+        console.error("File too large");
         return false;
     }
  
