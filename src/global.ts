@@ -4,12 +4,13 @@ const GlobalStyles = createGlobalStyle`
   :root {
     --color-main-pruurple: #781EBE;
     --color-light-pruurple: #AF67E7;
+    --color-secundary-pruurple: #1EBE71;
     --color-light-gray: #F2F2F2;
     --color-milk-white: #FCFCFC;
     --color-chat-bubble: #F2F2F2;
     --color-input-bg: #FCFCFC;
     --color-input-font: #939393;
-    --color-font-black: #000000;
+    --color-font-black: #241d29;
     --color-font-white: #FFFFFF;
     --color-scrolltrack: #FCFCFC;
     --color-scrollbar: #F2F2F2;

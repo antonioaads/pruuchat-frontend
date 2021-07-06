@@ -22,7 +22,6 @@ export const HeaderContainer = styled.header`
   }
 
   .logo {
-    width: 45px;
-    height: 50px;
+    width: 150px;
   }
 `;

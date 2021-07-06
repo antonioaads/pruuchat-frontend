@@ -1,5 +1,5 @@
 import { HeaderContainer } from "./styles";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo-com-texto.svg";
 import Avatar from "../../components/Avatar";
 
 interface HeaderProps {

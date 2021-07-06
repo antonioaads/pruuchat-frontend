@@ -3,6 +3,7 @@ import { Container } from "./styles";
 interface AvatarProps {
   fullName: string;
   profilePictureUrl?: string;
+  size?: "small" | "x-large";
 }
 
 const getInitials = (fullName: string): string => {
@@ -17,17 +18,21 @@ const getInitials = (fullName: string): string => {
 const Avatar = ({
   fullName,
   profilePictureUrl,
+  size = "small",
 }: AvatarProps): React.ReactElement => {
+  const sizeClass = `avatar-${size}`;
   return (
     <Container>
       {profilePictureUrl ? (
         <img
           src={profilePictureUrl}
           alt="Profile picture"
-          className="avatar-img"
+          className={`avatar-img ${sizeClass}`}
         ></img>
       ) : (
-        <span className="avatar-initials">{getInitials(fullName)}</span>
+        <span className={`avatar-initials ${sizeClass}`}>
+          {getInitials(fullName)}
+        </span>
       )}
     </Container>
   );
