@@ -18,7 +18,7 @@ const Home = (): React.ReactElement => {
           fullname="Guilherme Giacomin"
           profilePictureUrl="https://avatars.githubusercontent.com/u/54778237?v=4"
         />
-
+        <div className="empty-purple-space"></div>
         <div className="page-content">
           <SideCard content={<span>hello</span>} />
           <Chat messageList={messageList} onSendClick={_onSendClick} />

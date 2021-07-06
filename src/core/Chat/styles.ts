@@ -5,7 +5,5 @@ export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 2% 5%;
-
-  background-color: green;
+  padding: 0 5% 2% 5%;
 `;

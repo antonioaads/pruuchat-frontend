@@ -14,4 +14,11 @@ export const Container = styled.div`
       flex: 1;
     }
   }
+
+  .empty-purple-space {
+    background-color: var(--color-main-pruurple);
+    height: 70px;
+    position: absolute;
+    width: 100%;
+  }
 `;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.header`
   height: var(--header-height);
   background-color: var(--color-main-pruurple);
   padding: 1em 5em;
