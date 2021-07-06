@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const HomeContainer = styled.div`
   height: inherit;
   .page-content {
     position: absolute;
