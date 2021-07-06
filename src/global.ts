@@ -11,6 +11,7 @@ const GlobalStyles = createGlobalStyle`
     --color-font-white: #FFFFFF;
     --color-scrolltrack: #FCFCFC;
     --color-scrollbar: #F2F2F2;
+    --color-background: #FFFFFF;
   }
 
   * {
@@ -27,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
+    overflow: hidden;
     background: #FFFFFF;
     color: #29292e;
     -webkit-font-smoothing: antialiased;
