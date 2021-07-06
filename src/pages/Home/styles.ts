@@ -16,9 +16,11 @@ export const HomeContainer = styled.div`
   }
 
   .empty-purple-space {
-    background-color: var(--color-main-pruurple);
-    height: 70px;
     position: absolute;
+    background-color: var(--color-main-pruurple);
+    height: calc(var(--empty-purple-space-height) + var(--header-height));
     width: 100%;
+    top: 0;
+    z-index: -1;
   }
 `;

@@ -21,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
   {
     :root {
       --header-height: 86px;
+      --empty-purple-space-height: 70px;
     }
   }
 
@@ -33,6 +34,7 @@ const GlobalStyles = createGlobalStyle`
 
   html, body, #root {
     min-height: 100vh;
+    height: 100vh;
   }
 
   body {
@@ -49,6 +51,24 @@ const GlobalStyles = createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  /* Chrome, Edge, Safari */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-scrolltrack);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar);
+    border: 3px solid var(--color-scrollbar);
+  }
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrolltrack) var(--color-scrollbar);
 `;
 
 export default GlobalStyles;

@@ -35,7 +35,7 @@ export const Container = styled.div`
 
   .btn-save {
     display: block;
-    margin: 2.5em auto;
+    margin: 2.5em auto 0 auto;
     width: 80%;
   }
 `;
