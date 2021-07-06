@@ -11,7 +11,7 @@ const CircularButton = styled.button<CircularButtonProps>`
     width: 58px;
     height: 58px;
     border-radius: 29px;
-    padding: ${props => props.padding ? props.padding.join('px ') + 'px' : ''};
+    padding: ${({ padding }) => padding ? padding.join('px ') + 'px' : ''};
 
     background-color: var(--color-main-pruurple);
 `;
