@@ -5,6 +5,9 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: center;
   column-gap: 1em;
+  background-color: var(--color-main-pruurple); 
+  padding: 10px;
+  border-radius: 5px;
 
   .fullname {
     color: var(--color-light-gray);

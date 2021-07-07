@@ -15,6 +15,21 @@ export const HomeContainer = styled.div`
     }
   }
 
+  @media (max-width: 1041px)
+  {
+    .page-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+  @media (max-width: 870px){
+    .page-content {
+      padding-left: 10px;
+      margin-top: 10px;
+      padding-right: 0px;
+    }
+  }
+
   .empty-purple-space {
     position: absolute;
     background-color: var(--color-main-pruurple);
@@ -23,4 +38,6 @@ export const HomeContainer = styled.div`
     top: 0;
     z-index: -1;
   }
+
+
 `;

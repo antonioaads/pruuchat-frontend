@@ -25,4 +25,13 @@ export const Container = styled.div`
     height: 300px;
     font-size: 70px;
   }
+
+  @media (max-width: 1041px)
+  {
+    .avatar-x-large {
+      width: 100%;
+      height: 100%;
+    
+    }
+  }
 `;

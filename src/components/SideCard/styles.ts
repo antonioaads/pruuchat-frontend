@@ -9,4 +9,17 @@ export const Container = styled.section`
   ::-webkit-scrollbar-track {
     margin-top: 20px;
   }
+
+  @media (max-width: 1041px)
+  {
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-width: 235px;
+
+  }
+  @media(max-width: 768px){
+    
+    border: 2px solid var(--color-main-pruurple);
+  }
 `;
