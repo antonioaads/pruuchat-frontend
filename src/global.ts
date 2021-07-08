@@ -50,6 +50,21 @@ const GlobalStyles = createGlobalStyle`
     font: 400 16px 'Roboto', sans-serif;
   }
 
+  @media(max-width: 680px){
+    body.menu-visivel .chat {
+      // left: 200px;
+      z-index: 10;
+    }
+    body.menu-visivel  .sideCard  {
+      left: 10px;
+      z-index: 1000;
+      background-color: white;
+    }
+    body.menu-visivel {
+      overflow-x: hidden;
+    }
+  }
+
   button {
     cursor: pointer;
   }

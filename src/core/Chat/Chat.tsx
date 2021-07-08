@@ -20,7 +20,7 @@ const Chat = ({
   imageToBeSent,
 }: ChatProps): React.ReactElement => {
   return (
-    <ChatContainer>
+    <ChatContainer className="chat">
       <ChatUser />
       <MessageList messageList={messageList} />
       <ChatInput
