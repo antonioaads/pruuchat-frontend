@@ -24,14 +24,14 @@ export const Container = styled.section`
   }
   @media(max-width: 680px){
     position: absolute;
-    left: -236px;
+    left: calc(-90vw - 1px);
     top: 0;
     bottom: 0;
-    width: 235px;
+    width: 90vw;
     // background-color: white;
     // border: 1px solid silver;
     box-shadow: 2px 2px 3px silver;
-    transition: all 200ms ease-out;
+    transition: all 350ms ease-out;
 
 
     

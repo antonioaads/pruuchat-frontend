@@ -23,6 +23,8 @@ export const Container = styled.div`
   .avatar-x-large {
     width: 300px;
     height: 300px;
+    max-width: 300px;
+    max-height: 300px;
     font-size: 70px;
   }
 
