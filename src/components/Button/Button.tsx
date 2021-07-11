@@ -8,7 +8,6 @@ const ButtonStyled = styled.button<ButtonProps>`
   padding: 12px 20px;
   border-radius: 20px;
   border: none;
-  text-transform: uppercase;
   font-size: 14px;
   color: white;
   background-color: ${({ color }) =>
