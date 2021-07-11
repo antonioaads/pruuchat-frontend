@@ -21,6 +21,7 @@ const Home = (): React.ReactElement => {
   const [profileSelected, setProfileSelected] = useState<boolean>(false);
 
   const _onSendClick = (msg: string) => {
+    if (msg === '' && !chatState.currentMessage) return
     setChatState(({ messageList, currentMessage }: ChatState) => ({
       messageList: messageList.concat(
         currentMessage
