@@ -3,7 +3,7 @@ import Poppins from "../../fonts/Poppins/Poppins-Medium.ttf";
 import DefaultButton from "../../components/Button/index";
 import DefaultInput from "../../components/Input/index";
 import { ReactComponent as PruuIcon } from "../../assets/logo.svg";
-import Eye from '../../assets/eye.svg'
+import Eye from "../../assets/eye.svg";
 import Person from "../../assets/person.svg";
 
 export const fontFaces = css`
@@ -27,6 +27,8 @@ export const Container = styled.div`
     font-family: "Poppins", sans-serif;
     margin-bottom: 30px;
   }
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Card = styled.div`
@@ -34,13 +36,10 @@ export const Card = styled.div`
   background-color: #781ebe;
   width: 500px;
   height: 700px;
-  margin-right: 100px;
   border-radius: 25px;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  align-self: center;
-  margin-left:auto;
 `;
 
 export const Button = styled(DefaultButton)`
@@ -53,26 +52,41 @@ export const Button = styled(DefaultButton)`
 `;
 
 export const Input = styled(DefaultInput)`
-  margin: 10px;
-  width: 370px;
+  padding: 10px;
+  width: 90%;
   color: #000;
   height: 50px;
   font-size: 14px;
   font-weight: 200;
   font-family: "Poppins", sans-serif;
+  position: relative;
+  margin-left: 30px;
 `;
 
 export const Logo = styled(PruuIcon)`
-  margin-bottom: 100px;
+  margin-right: 30px;
 `;
 
-export const Eye = styled.div`
-
-  margin-bottom: 100px;
-  width: 70%;
+export const EyeIcon = styled.img`
+  background-image: url(${Eye});
+  padding: 10px;
+  width: 25px;
+  right: 50px;
+  position: relative;
 `;
 
-export const Person = styled.div`
-  margin-bottom: 100px;
-  width: 70%;
+export const InputContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 25px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PersonIcon = styled.img`
+  background-image: url(${Person});
+  padding: 10px;
+  width: 25px;
+  right: 50px;
+  position: relative;
 `;

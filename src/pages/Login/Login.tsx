@@ -1,5 +1,15 @@
 import React from "react";
-import { Container, Card, Button, Input, Logo } from "./styles";
+import {
+  Container,
+  Card,
+  Button,
+  Input,
+  Logo,
+  EyeIcon,
+  PersonIcon,
+  InputContainer,
+} from "./styles";
+import { useHistory } from "react-router-dom";
 
 interface State {
   username: string;
@@ -8,6 +18,7 @@ interface State {
 }
 
 const Login = (): React.ReactElement => {
+  const history = useHistory();
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
@@ -29,8 +40,12 @@ const Login = (): React.ReactElement => {
     event.preventDefault();
   };
 
-  const handleClick = () => {
-    alert("Hello! I am an alert box!!");
+  const login = () => {
+    history.push("/");
+  };
+
+  const register = () => {
+    history.push("/register");
   };
 
   return (
@@ -38,21 +53,24 @@ const Login = (): React.ReactElement => {
       <Card>
         <Logo />
         <h1>Faça seu login</h1>
-        <Input label="Usuári@" />
-        <Input label="Senha" onChange={handleChange("password")}>
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              edge="end"
-            >
-              {values.showPassword ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-          </InputAdornment>
-        </Input>
-        <Button color="secundary">Acessar</Button>
-        <Button color="secundary">Cadastrar</Button>
+        <InputContainer>
+          <Input label="" placeholder="Usuári@" />
+          <PersonIcon />
+        </InputContainer>
+        <InputContainer>
+          <Input
+            label=""
+            onChange={handleChange("password")}
+            placeholder="Senha"
+          />
+          <EyeIcon />
+        </InputContainer>
+        <Button color="secundary" onClick={login}>
+          Acessar
+        </Button>
+        <Button color="secundary" onClick={register}>
+          Cadastrar
+        </Button>
       </Card>
     </Container>
   );
