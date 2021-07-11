@@ -5,6 +5,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
+  padding: 1.5em;
+
   .close-icon {
     align-self: flex-start;
     width: 22px;
