@@ -5,6 +5,7 @@ import Chat from "../../core/Chat";
 import { Message } from "../../components/MessageList/types";
 import SideCard from "../../components/SideCard";
 import EditUser from "../../components/EditUser";
+import ChatList from "../../components/ChatList";
 
 type ChatState = {
   messageList: Array<Message>;
@@ -49,8 +50,8 @@ const Home = (): React.ReactElement => {
       />
       <div className="empty-purple-space"></div>
       <div className="page-content">
-        <SideCard content={<EditUser />} />
-        <Chat 
+        <SideCard content={<ChatList />} />
+        <Chat
           messageList={chatState.messageList}
           onSendClick={_onSendClick}
           handleImageFile={_handleImageFile}
