@@ -15,6 +15,9 @@ const GlobalStyles = createGlobalStyle`
     --color-scrolltrack: #FCFCFC;
     --color-scrollbar: #F2F2F2;
     --color-background: #FFFFFF;
+    --color-background-selected: #DED0F0;
+    --color-background-hover: #f1e8fc;
+
 
     --first-media-query: 1041px;
   }
