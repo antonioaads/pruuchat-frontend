@@ -15,6 +15,9 @@ const GlobalStyles = createGlobalStyle`
     --color-scrolltrack: #FCFCFC;
     --color-scrollbar: #F2F2F2;
     --color-background: #FFFFFF;
+    --color-background-selected: #DED0F0;
+    --color-background-hover: #f1e8fc;
+
 
     --first-media-query: 1041px;
   }
@@ -48,6 +51,24 @@ const GlobalStyles = createGlobalStyle`
 
   body, input, button {
     font: 400 16px 'Roboto', sans-serif;
+  }
+
+  .sideCard{
+    z-index: 1000;
+  }
+
+  @media(max-width: 680px){
+    body.menu-visivel .chat {
+      // left: 200px;
+      z-index: 10;
+    }
+    body.menu-visivel  .sideCard  {
+      left: 10px;
+      background-color: white;
+    }
+    body.menu-visivel {
+      overflow-x: hidden;
+    }
   }
 
   button {

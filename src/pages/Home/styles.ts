@@ -39,5 +39,13 @@ export const HomeContainer = styled.div`
     z-index: -1;
   }
 
+  @media(max-width: 680px){
+    .chat, .page-content {
+      display: block;
+      position: relative;
+    }
+
+  }
+
 
 `;

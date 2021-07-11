@@ -5,7 +5,7 @@ interface SideCardProps {
 }
 
 const SideCard = ({ content }: SideCardProps): React.ReactElement => {
-  return <Container>{content}</Container>;
+  return <Container className="sideCard">{content}</Container>;
 };
 
 export default SideCard;

@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+interface ContainerProps {
+  clickable?: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
+  ${({clickable}) => clickable ? 'cursor: pointer;' : ''}
+
+
   .avatar-initials,
   .avatar-img {
     border-radius: 50%;
@@ -23,6 +30,8 @@ export const Container = styled.div`
   .avatar-x-large {
     width: 300px;
     height: 300px;
+    max-width: 300px;
+    max-height: 300px;
     font-size: 70px;
   }
 
@@ -31,7 +40,7 @@ export const Container = styled.div`
     .avatar-x-large {
       width: 100%;
       height: 100%;
-    
+
     }
   }
 `;

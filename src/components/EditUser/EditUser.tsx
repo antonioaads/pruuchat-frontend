@@ -4,14 +4,23 @@ import Button from "../Button";
 import Input from "../Input";
 import Close from "../../assets/close.svg";
 
-const EditUser = (): React.ReactElement => {
+interface EditUserProps {
+  closeCallback: () => void;
+}
+
+const EditUser = ({closeCallback}: EditUserProps): React.ReactElement => {
   const fakeUser = {
     fullname: "Guilherme Giacomin",
     profilePictureUrl: "https://avatars.githubusercontent.com/u/54778237?v=4",
   };
   return (
     <Container>
-      <img src={Close} alt="Close icon" className="close-icon" />
+      <img
+        src={Close}
+        alt="Close icon"
+        className="close-icon"
+        onClick={closeCallback}
+      />
       <Avatar
         fullName={fakeUser.fullname}
         profilePictureUrl={fakeUser.profilePictureUrl}
