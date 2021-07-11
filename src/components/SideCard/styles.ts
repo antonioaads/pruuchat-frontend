@@ -3,9 +3,8 @@ import styled from "styled-components";
 export const Container = styled.section`
   background-color: var(--color-milk-white);
   border-radius: 15px;
-  padding: 1.5em;
   width: 25em;
-  overflow-y: scroll;
+  overflow-y: auto;
   ::-webkit-scrollbar-track {
     margin-top: 20px;
   }
@@ -19,7 +18,7 @@ export const Container = styled.section`
 
   }
   @media(max-width: 768px){
-    
+
     border: 2px solid var(--color-main-pruurple);
   }
   @media(max-width: 680px){
@@ -34,7 +33,7 @@ export const Container = styled.section`
     transition: all 350ms ease-out;
 
 
-    
+
 
 
   }

@@ -4,6 +4,7 @@ interface AvatarProps {
   fullName: string;
   profilePictureUrl?: string;
   size?: "small" | "x-large";
+  callback?: () => void;
 }
 
 const getInitials = (fullName: string): string => {
@@ -19,10 +20,11 @@ const Avatar = ({
   fullName,
   profilePictureUrl,
   size = "small",
+  callback,
 }: AvatarProps): React.ReactElement => {
   const sizeClass = `avatar-${size}`;
   return (
-    <Container>
+    <Container onClick={callback} clickable={!!callback}>
       {profilePictureUrl ? (
         <img
           src={profilePictureUrl}

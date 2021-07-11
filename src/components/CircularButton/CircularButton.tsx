@@ -1,28 +1,24 @@
-import React from "react";
-import styled from "styled-components";
+import React, { ReactElement, FC } from "react";
 import arrow from '../../assets/Arrow.svg';
-
-type CircularButtonProps = {
-    padding?: Array<number>
+import addUserIcon from '../../assets/AddUser.svg';
+import { Container } from "./styles";
+interface CircularButtonProps extends React.HTMLAttributes<HTMLButtonElement>{
+  icon: string;
+  iconAlt: string;
 }
 
-const CircularButton = styled.button<CircularButtonProps>`
-    border: none;
-    width: 58px;
-    height: 58px;
-    border-radius: 29px;
-    padding: ${({ padding }) => padding ? padding.join('px ') + 'px' : ''};
+const CircularButton = ({icon, iconAlt,...rest}: CircularButtonProps): ReactElement => (
+  <Container {...rest}>
+    <img src={icon} alt={iconAlt} />
+  </Container>
+)
 
-    background-color: var(--color-main-pruurple);
-`;
+export const SendButton: FC<React.HTMLAttributes<HTMLButtonElement>> = (props): ReactElement => (
+  <CircularButton {...props} icon={arrow} iconAlt="Enviar mensagem"/>
+)
 
-export const SendButton: React.FC<React.HTMLAttributes<HTMLButtonElement>> = (props): React.ReactElement => (
-    <CircularButton
-        padding={[20,21]}
-        {...props}
-    >
-        <img src={arrow} alt="Arrow" />
-    </CircularButton>
+export const AddUserButton: FC<React.HTMLAttributes<HTMLButtonElement>> = (props): ReactElement => (
+  <CircularButton {...props} icon={addUserIcon} iconAlt="Adicionar usuário"/>
 )
 
 export default CircularButton;

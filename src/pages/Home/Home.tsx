@@ -5,6 +5,7 @@ import Chat from "../../core/Chat";
 import { Message } from "../../components/MessageList/types";
 import SideCard from "../../components/SideCard";
 import EditUser from "../../components/EditUser";
+import ChatList from "../../components/ChatList";
 
 type ChatState = {
   messageList: Array<Message>;
@@ -16,6 +17,8 @@ const Home = (): React.ReactElement => {
     messageList: messages,
     currentMessage: null,
   });
+
+  const [profileSelected, setProfileSelected] = useState<boolean>(false);
 
   const _onSendClick = (msg: string) => {
     setChatState(({ messageList, currentMessage }: ChatState) => ({
@@ -46,11 +49,17 @@ const Home = (): React.ReactElement => {
       <Header
         fullname="Guilherme Giacomin"
         profilePictureUrl="https://avatars.githubusercontent.com/u/54778237?v=4"
+        avatarOnClick={() => setProfileSelected(true)}
       />
       <div className="empty-purple-space"></div>
       <div className="page-content">
-        <SideCard content={<EditUser />} />
-        <Chat 
+        <SideCard
+          content={profileSelected
+            ? <EditUser closeCallback={() => setProfileSelected(false)}/>
+            : <ChatList />
+          }
+        />
+        <Chat
           messageList={chatState.messageList}
           onSendClick={_onSendClick}
           handleImageFile={_handleImageFile}
