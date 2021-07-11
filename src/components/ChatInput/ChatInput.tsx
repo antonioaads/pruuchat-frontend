@@ -17,7 +17,7 @@ const ChatInput = ({ type, onSendClick, handleImageFile, imageToBeSent }: ChatIn
     const [ text, setText ] = useState('');
 
     const sendMessage = () => {
-        if(onSendClick && text !== '') onSendClick(text);
+        if(onSendClick) onSendClick(text);
         setText('');
     };
 
