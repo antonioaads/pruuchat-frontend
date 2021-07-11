@@ -1,20 +1,36 @@
 import { Container } from "./styles";
-import Avatar from "../Avatar";
-import Button from "../Button";
-import Input from "../Input";
-import Close from "../../assets/close.svg";
 import { AddUserButton } from "../CircularButton/CircularButton";
+import ChatCard from "./components/ChatCard";
 
 const ChatList = (): React.ReactElement => {
-  const fakeUser = {
-    fullname: "Guilherme Giacomin",
-    profilePictureUrl: "https://avatars.githubusercontent.com/u/54778237?v=4",
-  };
+
   return (
     <Container>
-      <AddUserButton >
+      <ChatCard
+        name="Antônio Tony"
+        lastMessage="Tô pilotando aqui agora texto"
+        timeLastMessage="13:09"
+        notificationCount={2}
+      />
 
-      </AddUserButton>
+      <ChatCard
+        name="Guilherme GZ"
+        lastMessage="Peguei 150 no supino"
+        timeLastMessage="13:00"
+        notificationCount={4}
+      />
+
+      <ChatCard
+        selected
+        name="Rodrigo God"
+        lastMessage="Para de me encher o saco"
+        timeLastMessage="13:05"
+      />
+
+      <h4>
+        Adicione mais amigos
+      </h4>
+      <AddUserButton />
     </Container>
   );
 };
