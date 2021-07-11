@@ -22,4 +22,20 @@ export const Container = styled.section`
     
     border: 2px solid var(--color-main-pruurple);
   }
+  @media(max-width: 680px){
+    position: absolute;
+    left: calc(-90vw - 1px);
+    top: 0;
+    bottom: 0;
+    width: 90vw;
+    // background-color: white;
+    // border: 1px solid silver;
+    box-shadow: 2px 2px 3px silver;
+    transition: all 350ms ease-out;
+
+
+    
+
+
+  }
 `;

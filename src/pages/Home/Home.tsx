@@ -50,7 +50,7 @@ const Home = (): React.ReactElement => {
       <div className="empty-purple-space"></div>
       <div className="page-content">
         <SideCard content={<EditUser />} />
-        <Chat
+        <Chat 
           messageList={chatState.messageList}
           onSendClick={_onSendClick}
           handleImageFile={_handleImageFile}
