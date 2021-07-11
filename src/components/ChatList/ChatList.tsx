@@ -8,7 +8,7 @@ const ChatList = (): React.ReactElement => {
     <Container>
       <ChatCard
         name="Antônio Tony"
-        lastMessage="Tô pilotando aqui agora texto"
+        lastMessage="Tô pilotando aqui agora texto texto texto texto"
         timeLastMessage="13:09"
         notificationCount={2}
       />
@@ -23,7 +23,7 @@ const ChatList = (): React.ReactElement => {
       <ChatCard
         selected
         name="Rodrigo God"
-        lastMessage="Para de me encher o saco"
+        lastMessage="Para de me encher o saco tonim"
         timeLastMessage="13:05"
       />
 
