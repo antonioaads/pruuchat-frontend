@@ -21,16 +21,6 @@ const Register = (): React.ReactElement => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-
   const login = () => {
     history.push("/login");
   };
