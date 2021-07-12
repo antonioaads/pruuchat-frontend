@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Card, Button, Input, Logo, InputContainer } from "./styles";
 import { useHistory } from "react-router-dom";
+import routes from "../../utils/routersDefinitions";
 
 interface State {
   username: string;
@@ -22,11 +23,11 @@ const Register = (): React.ReactElement => {
     };
 
   const login = () => {
-    history.push("/login");
+    history.push(routes.login);
   };
 
   const register = () => {
-    history.push("/home");
+    history.push(routes.home);
   };
 
   return (

@@ -8,10 +8,10 @@ import Register from "./pages/Register";
 
 const Routes: React.FC = () => (
   <Switch>
+    <Redirect exact from={"/"} to={routes.login} />
     <Route path={routes.home} exact component={Home} />
     <Route path={routes.login} exact component={Login} />
     <Route path={routes.register} exact component={Register} />
-    <Redirect to={routes.login} />
   </Switch>
 );
 
