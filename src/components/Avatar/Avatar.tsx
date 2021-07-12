@@ -1,8 +1,10 @@
-import "./styles.css";
+import { Container } from "./styles";
 
 interface AvatarProps {
   fullName: string;
   profilePictureUrl?: string;
+  size?: "small" | "x-large";
+  callback?: () => void;
 }
 
 const getInitials = (fullName: string): string => {
@@ -14,19 +16,27 @@ const getInitials = (fullName: string): string => {
     ].charAt(0)}`;
 };
 
-const Avatar = (props: AvatarProps): React.ReactElement => {
+const Avatar = ({
+  fullName,
+  profilePictureUrl,
+  size = "small",
+  callback,
+}: AvatarProps): React.ReactElement => {
+  const sizeClass = `avatar-${size}`;
   return (
-    <>
-      {props.profilePictureUrl ? (
+    <Container onClick={callback} clickable={!!callback}>
+      {profilePictureUrl ? (
         <img
-          src={props.profilePictureUrl}
+          src={profilePictureUrl}
           alt="Profile picture"
-          className="avatar-img"
+          className={`avatar-img ${sizeClass}`}
         ></img>
       ) : (
-        <span className="avatar-initials">{getInitials(props.fullName)}</span>
+        <span className={`avatar-initials ${sizeClass}`}>
+          {getInitials(fullName)}
+        </span>
       )}
-    </>
+    </Container>
   );
 };
 
