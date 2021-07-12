@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Card,
-  Button,
-  Input,
-  Logo,
-  EyeIcon,
-  PersonIcon,
-  InputContainer,
-} from "./styles";
+import { Container, Card, Button, Input, Logo, InputContainer } from "./styles";
 import { useHistory } from "react-router-dom";
 
 interface State {
@@ -17,7 +8,7 @@ interface State {
   showPassword: boolean;
 }
 
-const Login = (): React.ReactElement => {
+const Register = (): React.ReactElement => {
   const history = useHistory();
   const [values, setValues] = React.useState<State>({
     username: "",
@@ -41,39 +32,48 @@ const Login = (): React.ReactElement => {
   };
 
   const login = () => {
-    history.push("/");
+    history.push("/login");
   };
 
   const register = () => {
-    history.push("/register");
+    history.push("/home");
   };
 
   return (
     <Container>
       <Card>
         <Logo />
-        <h1>Faça seu login</h1>
+        <h1>Faça seu Registro</h1>
         <InputContainer>
-          <Input label="" placeholder="E-mail" />
-          <PersonIcon />
+          <Input label="" placeholder="Nome" />
         </InputContainer>
         <InputContainer>
           <Input
             label=""
             onChange={handleChange("password")}
-            placeholder="Senha"
+            placeholder="E-mail"
           />
-          <EyeIcon />
         </InputContainer>
-        <Button color="secundary" onClick={login}>
-          Acessar
-        </Button>
+        <InputContainer>
+          <Input label="" placeholder="Senha" />
+        </InputContainer>
+        <InputContainer>
+          <Input
+            label=""
+            onChange={handleChange("password")}
+            placeholder="Confirmar Senha"
+          />
+        </InputContainer>
+
         <Button color="secundary" onClick={register}>
           Cadastrar
+        </Button>
+        <Button color="secundary" onClick={login}>
+          Voltar
         </Button>
       </Card>
     </Container>
   );
 };
 
-export default Login;
+export default Register;

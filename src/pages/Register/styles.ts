@@ -60,19 +60,10 @@ export const Input = styled(DefaultInput)`
   font-weight: 200;
   font-family: "Poppins", sans-serif;
   position: relative;
-  margin-left: 30px;
 `;
 
 export const Logo = styled(PruuIcon)`
   margin-right: 30px;
-`;
-
-export const EyeIcon = styled.img`
-  background-image: url(${Eye});
-  padding: 10px;
-  width: 25px;
-  right: 50px;
-  position: relative;
 `;
 
 export const InputContainer = styled.div`
@@ -81,12 +72,4 @@ export const InputContainer = styled.div`
   margin-bottom: 25px;
   justify-content: center;
   align-items: center;
-`;
-
-export const PersonIcon = styled.img`
-  background-image: url(${Person});
-  padding: 10px;
-  width: 25px;
-  right: 50px;
-  position: relative;
 `;

@@ -4,7 +4,7 @@ const GlobalStyles = createGlobalStyle`
   :root {
     --color-main-pruurple: #781EBE;
     --color-light-pruurple: #AF67E7;
-    --color-secundary-pruurple: #1EBE71;
+    --color-secundary-pruurple: #AF67E7;
     --color-light-gray: #F2F2F2;
     --color-milk-white: #FCFCFC;
     --color-chat-bubble: #F2F2F2;
