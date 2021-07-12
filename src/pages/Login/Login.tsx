@@ -10,6 +10,7 @@ import {
   InputContainer,
 } from "./styles";
 import { useHistory } from "react-router-dom";
+import routes from "../../utils/routersDefinitions";
 
 interface State {
   username: string;
@@ -31,11 +32,11 @@ const Login = (): React.ReactElement => {
     };
 
   const login = () => {
-    history.push("/");
+    history.push(routes.home);
   };
 
   const register = () => {
-    history.push("/register");
+    history.push(routes.register);
   };
 
   return (
