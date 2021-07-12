@@ -3,8 +3,6 @@ import Poppins from "../../fonts/Poppins/Poppins-Medium.ttf";
 import DefaultButton from "../../components/Button/index";
 import DefaultInput from "../../components/Input/index";
 import { ReactComponent as PruuIcon } from "../../assets/logo.svg";
-import Eye from "../../assets/eye.svg";
-import Person from "../../assets/person.svg";
 
 export const fontFaces = css`
   @font-face {
