@@ -31,7 +31,7 @@ const Login = (): React.ReactElement => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const login = () => {
+  const login = async () => {
     history.push(routes.home);
   };
 
