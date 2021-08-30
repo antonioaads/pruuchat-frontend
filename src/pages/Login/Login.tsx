@@ -44,18 +44,14 @@ const Login = (): React.ReactElement => {
       })
       .then(function (response) {
         if (response.status === 200) {
-          console.log(response);
           setUser(response.data);
           history.push(routes.home);
         } else setError(response.data.message);
       })
       .catch(function (error) {
-        console.log(error);
         setError(error.message);
       });
   };
-
-  console.log(user);
 
   const register = () => {
     history.push(routes.register);

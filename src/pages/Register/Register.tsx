@@ -11,6 +11,7 @@ import {
 import { useHistory } from "react-router-dom";
 import routes from "../../utils/routersDefinitions";
 import axios from "axios";
+import { useUser } from "../../provider/UserProvider";
 
 interface State {
   name: string;
@@ -21,6 +22,7 @@ interface State {
 
 const Register = (): React.ReactElement => {
   const history = useHistory();
+  const { setUser } = useUser();
   const [error, setError] = React.useState("");
   const [values, setValues] = React.useState<State>({
     name: "",
@@ -47,16 +49,17 @@ const Register = (): React.ReactElement => {
           password: values.password,
         })
         .then(function (response) {
-          if (response.status === 201) console.log(response);
-          //setToken(response.data);
-          else setError(response.data.message);
+          if (response.status === 201) {
+            setUser(response.data);
+            history.push(routes.home);
+          } else {
+            setError(response.data.message);
+          }
         })
         .catch(function (error) {
-          console.log(error);
           setError(error.message);
         });
     else {
-      console.log("Wrong");
       setError("Password and Confirm Password must be the same!");
     }
   };
