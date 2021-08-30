@@ -13,6 +13,7 @@ import {
 import { useHistory } from "react-router-dom";
 import routes from "../../utils/routersDefinitions";
 import axios from "axios";
+import { useUser } from "../../provider/UserProvider";
 
 interface State {
   email: string;
@@ -22,6 +23,7 @@ interface State {
 
 const Login = (): React.ReactElement => {
   const history = useHistory();
+  const { user, setUser } = useUser();
   const [error, setError] = React.useState("");
   const [values, setValues] = React.useState<State>({
     email: "",
@@ -41,14 +43,19 @@ const Login = (): React.ReactElement => {
         password: values.password,
       })
       .then(function (response) {
-        if (response.status === 200) console.log(response);
-        else setError(response.data.message);
+        if (response.status === 200) {
+          console.log(response);
+          setUser(response.data);
+          history.push(routes.home);
+        } else setError(response.data.message);
       })
       .catch(function (error) {
         console.log(error);
         setError(error.message);
       });
   };
+
+  console.log(user);
 
   const register = () => {
     history.push(routes.register);
