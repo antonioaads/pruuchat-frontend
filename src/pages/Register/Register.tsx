@@ -1,20 +1,32 @@
 import React from "react";
-import { Container, Card, Button, Input, Logo, InputContainer } from "./styles";
+import {
+  Container,
+  Card,
+  Button,
+  Input,
+  Logo,
+  InputContainer,
+  Label,
+} from "./styles";
 import { useHistory } from "react-router-dom";
 import routes from "../../utils/routersDefinitions";
+import axios from "axios";
 
 interface State {
-  username: string;
+  name: string;
+  email: string;
   password: string;
-  showPassword: boolean;
+  confirmPassword: string;
 }
 
 const Register = (): React.ReactElement => {
   const history = useHistory();
+  const [error, setError] = React.useState("");
   const [values, setValues] = React.useState<State>({
-    username: "",
+    name: "",
+    email: "",
     password: "",
-    showPassword: false,
+    confirmPassword: "",
   });
 
   const handleChange =
@@ -26,8 +38,27 @@ const Register = (): React.ReactElement => {
     history.push(routes.login);
   };
 
-  const register = () => {
-    history.push(routes.home);
+  const register = async () => {
+    if (values.password === values.confirmPassword)
+      await axios
+        .post("http://localhost:4018/users", {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        })
+        .then(function (response) {
+          if (response.status === 201) console.log(response);
+          //setToken(response.data);
+          else setError(response.data.message);
+        })
+        .catch(function (error) {
+          console.log(error);
+          setError(error.message);
+        });
+    else {
+      console.log("Wrong");
+      setError("Password and Confirm Password must be the same!");
+    }
   };
 
   return (
@@ -36,25 +67,31 @@ const Register = (): React.ReactElement => {
         <Logo />
         <h1>Faça seu Registro</h1>
         <InputContainer>
-          <Input label="" placeholder="Nome" />
+          <Input label="" onChange={handleChange("name")} placeholder="Nome" />
         </InputContainer>
         <InputContainer>
           <Input
             label=""
-            onChange={handleChange("password")}
+            onChange={handleChange("email")}
             placeholder="E-mail"
           />
         </InputContainer>
         <InputContainer>
-          <Input label="" placeholder="Senha" />
+          <Input
+            label=""
+            onChange={handleChange("password")}
+            placeholder="Senha"
+          />
         </InputContainer>
         <InputContainer>
           <Input
             label=""
-            onChange={handleChange("password")}
+            onChange={handleChange("confirmPassword")}
             placeholder="Confirmar Senha"
           />
         </InputContainer>
+
+        {error ? <Label>{error}</Label> : null}
 
         <Button color="secundary" onClick={register}>
           Cadastrar

@@ -8,20 +8,23 @@ import {
   EyeIcon,
   PersonIcon,
   InputContainer,
+  Label,
 } from "./styles";
 import { useHistory } from "react-router-dom";
 import routes from "../../utils/routersDefinitions";
+import axios from "axios";
 
 interface State {
-  username: string;
+  email: string;
   password: string;
   showPassword: boolean;
 }
 
 const Login = (): React.ReactElement => {
   const history = useHistory();
+  const [error, setError] = React.useState("");
   const [values, setValues] = React.useState<State>({
-    username: "",
+    email: "",
     password: "",
     showPassword: false,
   });
@@ -31,8 +34,20 @@ const Login = (): React.ReactElement => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const login = () => {
-    history.push(routes.home);
+  const login = async () => {
+    await axios
+      .post("http://localhost:4018/auth", {
+        email: values.email,
+        password: values.password,
+      })
+      .then(function (response) {
+        if (response.status === 200) console.log(response);
+        else setError(response.data.message);
+      })
+      .catch(function (error) {
+        console.log(error);
+        setError(error.message);
+      });
   };
 
   const register = () => {
@@ -45,7 +60,11 @@ const Login = (): React.ReactElement => {
         <Logo />
         <h1>Faça seu login</h1>
         <InputContainer>
-          <Input label="" placeholder="E-mail" />
+          <Input
+            label=""
+            placeholder="E-mail"
+            onChange={handleChange("email")}
+          />
           <PersonIcon />
         </InputContainer>
         <InputContainer>
@@ -56,6 +75,9 @@ const Login = (): React.ReactElement => {
           />
           <EyeIcon />
         </InputContainer>
+
+        {error ? <Label>{error}</Label> : null}
+
         <Button color="secundary" onClick={login}>
           Acessar
         </Button>
