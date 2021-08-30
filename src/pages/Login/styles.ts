@@ -44,7 +44,7 @@ export const Card = styled.div`
 
 export const Label = styled.label`
   display: flex;
-  color: #f00;
+  color: #cf3232;
 `;
 
 
