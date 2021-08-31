@@ -49,7 +49,7 @@ const Register = (): React.ReactElement => {
           password: values.password,
         })
         .then(function (response) {
-          if (response.status === 201) {
+          if (response.data.token) {
             setUser(response.data);
             history.push(routes.home);
           } else {

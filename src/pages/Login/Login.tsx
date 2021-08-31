@@ -49,7 +49,6 @@ const Login = (): React.ReactElement => {
       })
       .then(function (response) {
         if (response.data.token) {
-          console.log(response)
           setUser(response.data);
           history.push(routes.home);
         } else setError(response.data.message);
