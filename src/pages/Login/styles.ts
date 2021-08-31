@@ -47,7 +47,6 @@ export const Label = styled.label`
   color: #cf3232;
 `;
 
-
 export const Button = styled(DefaultButton)`
   margin: 15px;
   width: 230px;
@@ -77,6 +76,14 @@ export const EyeIcon = styled.img`
   background-image: url(${Eye});
   padding: 10px;
   width: 25px;
+  right: 50px;
+  position: relative;
+`;
+
+export const EyeClosedIcon = styled.img`
+  padding: 10px;
+  width: 45px;
+  height: 45px;
   right: 50px;
   position: relative;
 `;

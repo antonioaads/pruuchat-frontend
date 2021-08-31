@@ -9,10 +9,12 @@ import {
   PersonIcon,
   InputContainer,
   Label,
+  EyeClosedIcon,
 } from "./styles";
 import { useHistory } from "react-router-dom";
 import routes from "../../utils/routersDefinitions";
 import axios from "axios";
+import EyeClosed from "../../assets/eyeClosed.png";
 import { useUser } from "../../provider/UserProvider";
 
 interface State {
@@ -76,7 +78,20 @@ const Login = (): React.ReactElement => {
             onChange={handleChange("password")}
             placeholder="Senha"
           />
-          <EyeIcon />
+          {values.showPassword ? (
+            <EyeIcon
+              onClick={() =>
+                setValues({ ...values, ["showPassword"]: !values.showPassword })
+              }
+            />
+          ) : (
+            <EyeClosedIcon
+              src={EyeClosed}
+              onClick={() =>
+                setValues({ ...values, ["showPassword"]: !values.showPassword })
+              }
+            />
+          )}
         </InputContainer>
 
         {error ? <Label>{error}</Label> : null}
