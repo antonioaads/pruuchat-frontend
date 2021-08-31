@@ -14,7 +14,6 @@ import {
 import { useHistory } from "react-router-dom";
 import routes from "../../utils/routersDefinitions";
 import axios from "axios";
-import EyeClosed from "../../assets/eyeClosed.png";
 import { useUser } from "../../provider/UserProvider";
 
 interface State {
@@ -37,6 +36,10 @@ const Login = (): React.ReactElement => {
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
     };
+
+  const passwordVisibility = () => {
+    setValues({ ...values, ["showPassword"]: !values.showPassword });
+  };
 
   const login = async () => {
     await axios
@@ -74,23 +77,15 @@ const Login = (): React.ReactElement => {
         </InputContainer>
         <InputContainer>
           <Input
+            type={!values.showPassword ? "text" : "password"}
             label=""
             onChange={handleChange("password")}
             placeholder="Senha"
           />
-          {values.showPassword ? (
-            <EyeIcon
-              onClick={() =>
-                setValues({ ...values, ["showPassword"]: !values.showPassword })
-              }
-            />
+          {!values.showPassword ? (
+            <EyeIcon onClick={passwordVisibility} />
           ) : (
-            <EyeClosedIcon
-              src={EyeClosed}
-              onClick={() =>
-                setValues({ ...values, ["showPassword"]: !values.showPassword })
-              }
-            />
+            <EyeClosedIcon onClick={passwordVisibility} />
           )}
         </InputContainer>
 
