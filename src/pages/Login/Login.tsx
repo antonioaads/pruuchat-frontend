@@ -25,7 +25,7 @@ interface State {
 
 const Login = (): React.ReactElement => {
   const history = useHistory();
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const [error, setError] = React.useState("");
   const [values, setValues] = React.useState<State>({
     email: "",
