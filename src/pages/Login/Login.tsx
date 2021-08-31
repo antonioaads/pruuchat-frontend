@@ -19,7 +19,7 @@ import { useUser } from "../../provider/UserProvider";
 interface State {
   email: string;
   password: string;
-  showPassword: boolean;
+  hidePassword: boolean;
 }
 
 const Login = (): React.ReactElement => {
@@ -29,7 +29,7 @@ const Login = (): React.ReactElement => {
   const [values, setValues] = React.useState<State>({
     email: "",
     password: "",
-    showPassword: false,
+    hidePassword: true,
   });
 
   const handleChange =
@@ -38,7 +38,7 @@ const Login = (): React.ReactElement => {
     };
 
   const passwordVisibility = () => {
-    setValues({ ...values, ["showPassword"]: !values.showPassword });
+    setValues({ ...values, ["hidePassword"]: !values.hidePassword });
   };
 
   const login = async () => {
@@ -48,7 +48,8 @@ const Login = (): React.ReactElement => {
         password: values.password,
       })
       .then(function (response) {
-        if (response.status === 200) {
+        if (response.data.token) {
+          console.log(response)
           setUser(response.data);
           history.push(routes.home);
         } else setError(response.data.message);
@@ -77,12 +78,12 @@ const Login = (): React.ReactElement => {
         </InputContainer>
         <InputContainer>
           <Input
-            type={!values.showPassword ? "text" : "password"}
+            type={!values.hidePassword ? "text" : "password"}
             label=""
             onChange={handleChange("password")}
             placeholder="Senha"
           />
-          {!values.showPassword ? (
+          {!values.hidePassword ? (
             <EyeIcon onClick={passwordVisibility} />
           ) : (
             <EyeClosedIcon onClick={passwordVisibility} />
