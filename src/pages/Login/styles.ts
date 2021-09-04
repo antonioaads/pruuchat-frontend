@@ -4,6 +4,7 @@ import DefaultButton from "../../components/Button/index";
 import DefaultInput from "../../components/Input/index";
 import { ReactComponent as PruuIcon } from "../../assets/logo.svg";
 import Eye from "../../assets/eye.svg";
+import EyeClosed from "../../assets/eyeClosed.svg";
 import Person from "../../assets/person.svg";
 
 export const fontFaces = css`
@@ -42,6 +43,11 @@ export const Card = styled.div`
   align-items: center;
 `;
 
+export const Label = styled.label`
+  display: flex;
+  color: #cf3232;
+`;
+
 export const Button = styled(DefaultButton)`
   margin: 15px;
   width: 230px;
@@ -74,6 +80,15 @@ export const EyeIcon = styled.img`
   right: 50px;
   position: relative;
 `;
+
+export const EyeClosedIcon = styled.img`
+  background-image: url(${EyeClosed});
+  padding: 10px;
+  width: 25px;
+  right: 50px;
+  position: relative;
+`;
+
 
 export const InputContainer = styled.div`
   display: flex;

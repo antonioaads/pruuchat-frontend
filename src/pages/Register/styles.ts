@@ -40,6 +40,11 @@ export const Card = styled.div`
   align-items: center;
 `;
 
+export const Label = styled.label`
+  display: flex;
+  color: #cf3232;
+`;
+
 export const Button = styled(DefaultButton)`
   margin: 15px;
   width: 230px;

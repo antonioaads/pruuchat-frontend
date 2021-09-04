@@ -2,6 +2,7 @@ import { Label, Input } from "./styles";
 
 interface ButtonProps {
   label: string;
+  type?: string;
 }
 
 const Button: React.FC<ButtonProps & React.HTMLAttributes<HTMLInputElement>> = (

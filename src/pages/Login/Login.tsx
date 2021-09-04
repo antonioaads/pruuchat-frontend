@@ -8,22 +8,28 @@ import {
   EyeIcon,
   PersonIcon,
   InputContainer,
+  Label,
+  EyeClosedIcon,
 } from "./styles";
 import { useHistory } from "react-router-dom";
 import routes from "../../utils/routersDefinitions";
+import axios from "axios";
+import { useUser } from "../../provider/UserProvider";
 
 interface State {
-  username: string;
+  email: string;
   password: string;
-  showPassword: boolean;
+  hidePassword: boolean;
 }
 
 const Login = (): React.ReactElement => {
   const history = useHistory();
+  const { setUser } = useUser();
+  const [error, setError] = React.useState("");
   const [values, setValues] = React.useState<State>({
-    username: "",
+    email: "",
     password: "",
-    showPassword: false,
+    hidePassword: true,
   });
 
   const handleChange =
@@ -31,8 +37,25 @@ const Login = (): React.ReactElement => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const login = () => {
-    history.push(routes.home);
+  const passwordVisibility = () => {
+    setValues({ ...values, ["hidePassword"]: !values.hidePassword });
+  };
+
+  const login = async () => {
+    await axios
+      .post("http://localhost:4018/auth", {
+        email: values.email,
+        password: values.password,
+      })
+      .then(function (response) {
+        if (response.data.token) {
+          setUser(response.data);
+          history.push(routes.home);
+        } else setError(response.data.message);
+      })
+      .catch(function (error) {
+        setError(error.message);
+      });
   };
 
   const register = () => {
@@ -45,17 +68,29 @@ const Login = (): React.ReactElement => {
         <Logo />
         <h1>Faça seu login</h1>
         <InputContainer>
-          <Input label="" placeholder="E-mail" />
+          <Input
+            label=""
+            placeholder="E-mail"
+            onChange={handleChange("email")}
+          />
           <PersonIcon />
         </InputContainer>
         <InputContainer>
           <Input
+            type={!values.hidePassword ? "text" : "password"}
             label=""
             onChange={handleChange("password")}
             placeholder="Senha"
           />
-          <EyeIcon />
+          {!values.hidePassword ? (
+            <EyeIcon onClick={passwordVisibility} />
+          ) : (
+            <EyeClosedIcon onClick={passwordVisibility} />
+          )}
         </InputContainer>
+
+        {error ? <Label>{error}</Label> : null}
+
         <Button color="secundary" onClick={login}>
           Acessar
         </Button>
