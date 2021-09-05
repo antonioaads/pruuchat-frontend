@@ -1,13 +1,18 @@
 import { Container } from "./styles";
 import Avatar from "../Avatar";
+import { IUser } from "../../provider/UserProvider";
 
-const ChatUser = (): React.ReactElement => {
+type ChatUserProps = {
+  user?: IUser;
+}
+
+const ChatUser = ({ user }: ChatUserProps): React.ReactElement => {
   return (
     <Container>
-      <Avatar fullName="Rodrigo God" />
+      <Avatar fullName={user?.name || ""} />
       <div>
-        <p className="fullname">Rodrigo God</p>
-        <p className="status">online</p>
+        <p className="fullname">{user?.name}</p>
+        {/* <p className="status">online</p> */}
       </div>
     </Container>
   );

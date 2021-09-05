@@ -11,9 +11,9 @@ import React from "react";
 const Routes: React.FC = () => (
   <UserProvider>
     <Switch>
-    <Route path={routes.home} exact component={Home} />
-    <Route path={routes.login} exact component={Login} />
-    <Route path={routes.register} exact component={Register} />
+      <Route path={routes.home} exact component={Home} />
+      <Route path={routes.login} exact component={Login} />
+      <Route path={routes.register} exact component={Register} />
     </Switch>
   </UserProvider>
 );

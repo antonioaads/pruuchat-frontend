@@ -4,7 +4,7 @@ import { IUser } from "../provider/UserProvider";
 const API_URL = "http://localhost:4018";
 
 const api = {
-    getUsers: (token: string): Promise<Array<IUser>> => axios.get(`${API_URL}/users`, {
+    getFriends: (token: string): Promise<Array<IUser>> => axios.get(`${API_URL}/friends`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }

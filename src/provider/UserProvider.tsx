@@ -16,6 +16,7 @@ export interface IUser {
   name: string;
   token: string;
   active: boolean;
+  picture: string;
 }
 
 const UserContext = createContext({
@@ -41,7 +42,3 @@ UserProvider.propTypes = {
 export const useUser = () => useContext(UserContext);
 
 export default UserProvider;
-
-export const useUserContext = () => {
-  return useContext(UserContext);
-};

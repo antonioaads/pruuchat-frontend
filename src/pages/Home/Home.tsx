@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { HomeContainer } from "./styles";
 import Header from "../../core/Header";
 import Chat from "../../core/Chat";
@@ -6,43 +6,56 @@ import { Message } from "../../components/MessageList/types";
 import SideCard from "../../components/SideCard";
 import EditUser from "../../components/EditUser";
 import ChatList from "../../components/ChatList";
-import { IUser, useUserContext } from "../../provider/UserProvider";
+import { IUser, useUser } from "../../provider/UserProvider";
 import api from "../../api";
 import { useHistory } from "react-router";
 import routersDefinitions from "../../utils/routersDefinitions";
+import io, { Socket } from "socket.io-client";
+import { DefaultEventsMap } from "socket.io-client/build/typed-events";
+import deepCopy from "../../utils/deepCopy";
 
-type ChatState = {
-  messageList: Array<Message>;
-  currentMessage: Message | null;
-};
 
 export type UserInfo = {
   user: IUser;
-  messages: Array<Message>
+  messages: Array<Message>;
+  unreadCount: number;
 };
 
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>
+
 const Home = (): React.ReactElement => {
-  const [chatState, setChatState] = useState<ChatState>({
-    messageList: messages,
-    currentMessage: null,
-  });
+  const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
 
   const [profileSelected, setProfileSelected] = useState<boolean>(false);
 
-  const { user } = useUserContext();
+  const { user } = useUser();
   const history = useHistory();
   const [usersInfo, setUsersInfo] = useState<Record<string, UserInfo>>({});
-  const [selectedUser, setSelectedUser] = useState<number>(0);
+  const [selectedUser, setSelectedUser] = useState<number>(1);
+
+  const updateSelectedUser = (id: number) => {
+    setSelectedUser(id);
+    setUsersInfo(prev => {
+      const temp = deepCopy(prev);
+      if (usersInfo[id]) {
+        usersInfo[id].unreadCount = 0;
+      }
+
+      return temp;
+    });
+  };
+
   useEffect(() => {
     let isMounted = true;
     if (user) {
-      api.getUsers(user.token)
+      api.getFriends(user.token)
         .then(list => {
           if (isMounted) {
             const temp: Record<string, UserInfo> = {};
             list.forEach(u => temp[u.id] = {
               user: u,
-              messages: []
+              messages: [],
+              unreadCount: 0
             })
             setUsersInfo(temp);
           }
@@ -51,40 +64,88 @@ const Home = (): React.ReactElement => {
     return () => { isMounted = false };
   }, []);
 
+  const cb = useCallback(({ originId, destinationId, text, timestamp }, prev) => {
+    const owner = originId == user?.id;
+    const chatId = owner ? destinationId : originId;
+
+    const temp: Record<string, UserInfo> = deepCopy(prev);
+
+    
+    if (temp[chatId]) {
+      temp[chatId].messages.push({
+        content: text,
+        owner,
+        timestamp
+      });
+      
+      console.log(selectedUser, chatId);
+      if (selectedUser != chatId && !owner) {
+        temp[chatId].unreadCount += 1;
+      }
+    }
+
+    return temp;
+  }, [selectedUser, user]);
+
+  // const cbcb = useCallback(({ originId, destinationId, text, timestamp }) => , [cb])
+
   useEffect(() => {
-    if (!user) history.push(routersDefinitions.login)
+    if (!user) return history.push(routersDefinitions.login);
+
+    socket = io('ws://localhost:4018/', { query: {id: String(user.id)} });
+
+    return () => { socket.disconnect() }
   }, [user]);
 
+  useEffect(() => {
+    if (!user) return history.push(routersDefinitions.login);
+
+    socket.off("message");
+    socket.on("message", ({ originId, destinationId, text, timestamp }) => {
+      console.log(originId, destinationId, text);
+      setUsersInfo(prev => cb({ originId, destinationId, text, timestamp }, prev));
+    });
+  }, [user, cb]);
+
   const _onSendClick = (msg: string) => {
-    if (msg === '' && !chatState.currentMessage) return
-    setChatState(({ messageList, currentMessage }: ChatState) => ({
-      messageList: messageList.concat(
-        currentMessage
-          ? { content: msg, owner: true, image: currentMessage.image }
-          : { content: msg, owner: true }
-      ),
-      currentMessage: null,
-    }));
+    if (msg === '' && !currentMessage) return
+
+    socket.emit("chat", {
+      originId: user?.id,
+      destinationId: selectedUser,
+      text: msg
+    })
+
+    setCurrentMessage(null);
+
+    // setChatState(({ messageList, currentMessage }: ChatState) => ({
+    //   messageList: messageList.concat(
+    //     currentMessage
+    //       ? { content: msg, owner: true, image: currentMessage.image }
+    //       : { content: msg, owner: true }
+    //   ),
+    //   currentMessage: null,
+    // }));
   };
 
-  const _handleImageFile = (file: File) => {
-    // carregar para exibir imagem em um tag img
-    // código apenas "placeholder" pra quando integrar com o back
-    const reader = new FileReader();
-    reader.onload = () => {
-      setChatState((previousState: ChatState) => ({
-        messageList: previousState.messageList,
-        currentMessage: { content: "", owner: true, image: reader.result },
-      }));
-    };
-    reader.readAsDataURL(file);
-  };
+  // const _handleImageFile = (file: File) => {
+  //   // carregar para exibir imagem em um tag img
+  //   // código apenas "placeholder" pra quando integrar com o back
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     setChatState((previousState: ChatState) => ({
+  //       messageList: previousState.messageList,
+  //       currentMessage: { content: "", owner: true, image: reader.result },
+  //     }));
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
 
   return (
     <HomeContainer>
       <Header
-        fullname="Guilherme Giacomin"
-        profilePictureUrl="https://avatars.githubusercontent.com/u/54778237?v=4"
+        fullname={user?.name || ""}
+        profilePictureUrl={user?.picture || ""}
         avatarOnClick={() => setProfileSelected(true)}
       />
       <div className="empty-purple-space"></div>
@@ -92,38 +153,24 @@ const Home = (): React.ReactElement => {
         <SideCard
           content={profileSelected
             ? <EditUser closeCallback={() => setProfileSelected(false)}/>
-            : <ChatList usersInfo={usersInfo} setSelectedUser={setSelectedUser} />
+            : <ChatList
+                usersInfo={usersInfo}
+                setSelectedUser={updateSelectedUser}
+              />
           }
         />
         <Chat
+          selectedUser={usersInfo[selectedUser]?.user}
           messageList={usersInfo[selectedUser]?.messages}
           onSendClick={_onSendClick}
-          handleImageFile={_handleImageFile}
-          imageToBeSent={
-            chatState.currentMessage && chatState.currentMessage.image
-          }
+          // handleImageFile={_handleImageFile}
+          // imageToBeSent={
+          //   chatState.currentMessage && chatState.currentMessage.image
+          // }
         />
       </div>
     </HomeContainer>
   );
 };
-
-const messages: Array<Message> = [
-  { content: "eae", owner: false },
-  { content: "eae bro", owner: true },
-  { content: "como vai?", owner: false },
-  { content: "tudo bem e vc?", owner: true },
-  { content: "suave na nave", owner: false },
-  { content: "e o trabalho", owner: true },
-  { content: "fluindo de boas?", owner: true },
-  { content: "ta no papo mano", owner: false },
-  { content: "olha só", owner: false },
-  {
-    content:
-      "Mussum Ipsum, cacilds vidis litro abertis. Interagi no mé, cursus quis, vehicula ac nisi. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis. Leite de capivaris, leite de mula manquis sem cabeça. Suco de cevadiss deixa as pessoas mais interessantis.",
-    owner: false,
-  },
-  { content: "boa, to vendo 🙄", owner: true },
-];
 
 export default Home;

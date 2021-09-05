@@ -1,12 +1,11 @@
 import { Container } from "./styles";
 import { AddUserButton } from "../CircularButton/CircularButton";
 import ChatCard from "./components/ChatCard";
-import { Dispatch, SetStateAction } from "react";
 import { UserInfo } from "../../pages/Home/Home";
 
 interface ChatListProps {
   usersInfo?: Record<string, UserInfo>;
-  setSelectedUser?: Dispatch<SetStateAction<number>>;
+  setSelectedUser?: (id: number) => void;
 }
 
 const ChatList = ({ usersInfo, setSelectedUser }: ChatListProps): React.ReactElement => {
@@ -14,16 +13,26 @@ const ChatList = ({ usersInfo, setSelectedUser }: ChatListProps): React.ReactEle
   return (
     <Container>
       {usersInfo
-        ? Object.keys(usersInfo).map(k => (
-          <ChatCard
-            key={String(usersInfo[k].user.id)}
-            name={usersInfo[k].user.name || ""}
-            lastMessage="Tô pilotando aqui agora texto texto texto texto"
-            timeLastMessage="13:09"
-            notificationCount={2}
-            onClick={() => setSelectedUser && setSelectedUser(usersInfo[k].user.id)}
-          />
-        ))
+        ? Object.keys(usersInfo).map(k => {
+          const userInfo = usersInfo[k];
+          const lastMessage = userInfo.messages[userInfo.messages.length-1];
+          const lastMessageDate = new Date(lastMessage?.timestamp);
+
+          return (
+            <ChatCard
+              key={String(userInfo.user.id)}
+              name={userInfo.user.name || ""}
+              lastMessage={lastMessage?.content}
+              timeLastMessage={
+                lastMessage
+                  ? `${`${lastMessageDate.getHours()}`.padStart(2, '0')}:${`${lastMessageDate.getMinutes()}`.padStart(2, '0')}`
+                  : ""
+              }
+              notificationCount={userInfo.unreadCount}
+              onClick={() => setSelectedUser && setSelectedUser(usersInfo[k].user.id)}
+            />
+          )
+        })
         : null
       }
 

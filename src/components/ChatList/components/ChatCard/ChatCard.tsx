@@ -22,9 +22,11 @@ const ChatCard = ({ selected, name, lastMessage, timeLastMessage, notificationCo
       <span>
         {timeLastMessage}
       </span>
-      {notificationCount && (<NotificationCount>
-        {notificationCount}
-      </NotificationCount>)}
+      {notificationCount !== undefined && notificationCount > 0 
+        ? (<NotificationCount>
+            {notificationCount}
+          </NotificationCount>)
+        : ""}
     </div>
   </Container>
 )

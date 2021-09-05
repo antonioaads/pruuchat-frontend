@@ -5,8 +5,10 @@ import { Image, Message } from "../../components/MessageList/types";
 import ChatInput from "../../components/ChatInput";
 import { HandleImageFileType } from "../../components/DropZone/types";
 import ChatUser from "../../components/ChatUser";
+import { IUser } from "../../provider/UserProvider";
 
 type ChatProps = {
+  selectedUser?: IUser;
   messageList?: Array<Message>;
   onSendClick?: (message: string) => void;
   handleImageFile?: HandleImageFileType;
@@ -14,6 +16,7 @@ type ChatProps = {
 };
 
 const Chat = ({
+  selectedUser,
   messageList,
   onSendClick,
   handleImageFile,
@@ -21,7 +24,7 @@ const Chat = ({
 }: ChatProps): React.ReactElement => {
   return (
     <ChatContainer className="chat">
-      <ChatUser />
+      <ChatUser user={selectedUser} />
       <MessageList messageList={messageList} />
       <ChatInput
         onSendClick={onSendClick}
