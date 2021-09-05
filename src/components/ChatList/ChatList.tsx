@@ -1,31 +1,31 @@
 import { Container } from "./styles";
 import { AddUserButton } from "../CircularButton/CircularButton";
 import ChatCard from "./components/ChatCard";
+import { Dispatch, SetStateAction } from "react";
+import { UserInfo } from "../../pages/Home/Home";
 
-const ChatList = (): React.ReactElement => {
+interface ChatListProps {
+  usersInfo?: Record<string, UserInfo>;
+  setSelectedUser?: Dispatch<SetStateAction<number>>;
+}
+
+const ChatList = ({ usersInfo, setSelectedUser }: ChatListProps): React.ReactElement => {
 
   return (
     <Container>
-      <ChatCard
-        name="Antônio Tony"
-        lastMessage="Tô pilotando aqui agora texto texto texto texto"
-        timeLastMessage="13:09"
-        notificationCount={2}
-      />
-
-      <ChatCard
-        name="Guilherme GZ"
-        lastMessage="Peguei 150 no supino"
-        timeLastMessage="13:00"
-        notificationCount={4}
-      />
-
-      <ChatCard
-        selected
-        name="Rodrigo God"
-        lastMessage="Para de me encher o saco tonim"
-        timeLastMessage="13:05"
-      />
+      {usersInfo
+        ? Object.keys(usersInfo).map(k => (
+          <ChatCard
+            key={String(usersInfo[k].user.id)}
+            name={usersInfo[k].user.name || ""}
+            lastMessage="Tô pilotando aqui agora texto texto texto texto"
+            timeLastMessage="13:09"
+            notificationCount={2}
+            onClick={() => setSelectedUser && setSelectedUser(usersInfo[k].user.id)}
+          />
+        ))
+        : null
+      }
 
       <h4>
         Adicione mais amigos

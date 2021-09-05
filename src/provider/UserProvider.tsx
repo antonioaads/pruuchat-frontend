@@ -15,7 +15,6 @@ export interface IUser {
   email: string;
   name: string;
   token: string;
-  password: string | null;
   active: boolean;
 }
 
@@ -42,3 +41,7 @@ UserProvider.propTypes = {
 export const useUser = () => useContext(UserContext);
 
 export default UserProvider;
+
+export const useUserContext = () => {
+  return useContext(UserContext);
+};

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HomeContainer } from "./styles";
 import Header from "../../core/Header";
 import Chat from "../../core/Chat";
@@ -6,10 +6,19 @@ import { Message } from "../../components/MessageList/types";
 import SideCard from "../../components/SideCard";
 import EditUser from "../../components/EditUser";
 import ChatList from "../../components/ChatList";
+import { IUser, useUserContext } from "../../provider/UserProvider";
+import api from "../../api";
+import { useHistory } from "react-router";
+import routersDefinitions from "../../utils/routersDefinitions";
 
 type ChatState = {
   messageList: Array<Message>;
   currentMessage: Message | null;
+};
+
+export type UserInfo = {
+  user: IUser;
+  messages: Array<Message>
 };
 
 const Home = (): React.ReactElement => {
@@ -19,6 +28,32 @@ const Home = (): React.ReactElement => {
   });
 
   const [profileSelected, setProfileSelected] = useState<boolean>(false);
+
+  const { user } = useUserContext();
+  const history = useHistory();
+  const [usersInfo, setUsersInfo] = useState<Record<string, UserInfo>>({});
+  const [selectedUser, setSelectedUser] = useState<number>(0);
+  useEffect(() => {
+    let isMounted = true;
+    if (user) {
+      api.getUsers(user.token)
+        .then(list => {
+          if (isMounted) {
+            const temp: Record<string, UserInfo> = {};
+            list.forEach(u => temp[u.id] = {
+              user: u,
+              messages: []
+            })
+            setUsersInfo(temp);
+          }
+        });
+    }
+    return () => { isMounted = false };
+  }, []);
+
+  useEffect(() => {
+    if (!user) history.push(routersDefinitions.login)
+  }, [user]);
 
   const _onSendClick = (msg: string) => {
     if (msg === '' && !chatState.currentMessage) return
@@ -57,11 +92,11 @@ const Home = (): React.ReactElement => {
         <SideCard
           content={profileSelected
             ? <EditUser closeCallback={() => setProfileSelected(false)}/>
-            : <ChatList />
+            : <ChatList usersInfo={usersInfo} setSelectedUser={setSelectedUser} />
           }
         />
         <Chat
-          messageList={chatState.messageList}
+          messageList={usersInfo[selectedUser]?.messages}
           onSendClick={_onSendClick}
           handleImageFile={_handleImageFile}
           imageToBeSent={

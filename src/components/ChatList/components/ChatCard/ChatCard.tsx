@@ -7,10 +7,11 @@ interface ChatCardProps {
   lastMessage: string;
   timeLastMessage: string;
   notificationCount?: number;
+  onClick?: () => void;
 }
 
-const ChatCard = ({ selected, name, lastMessage, timeLastMessage, notificationCount }: ChatCardProps): React.ReactElement => (
-  <Container selected={selected}>
+const ChatCard = ({ selected, name, lastMessage, timeLastMessage, notificationCount, onClick }: ChatCardProps): React.ReactElement => (
+  <Container selected={selected} onClick={onClick}>
     <Avatar fullName={name} />
     <div className="center-area">
       <h4>{name}</h4>

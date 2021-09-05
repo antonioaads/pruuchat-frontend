@@ -37,7 +37,7 @@ const Register = (): React.ReactElement => {
     };
 
   const login = () => {
-    history.push(routes.login);
+    history.push(routes.home);
   };
 
   const register = async () => {

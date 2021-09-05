@@ -1,5 +1,5 @@
 export default {
-  home: "/home",
   login: "/",
+  home: "/home",
   register: "/register",
 };
