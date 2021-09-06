@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { HomeContainer } from "./styles";
 import Header from "../../core/Header";
 import Chat from "../../core/Chat";
@@ -64,31 +64,6 @@ const Home = (): React.ReactElement => {
     return () => { isMounted = false };
   }, []);
 
-  const cb = useCallback(({ originId, destinationId, text, timestamp }, prev) => {
-    const owner = originId == user?.id;
-    const chatId = owner ? destinationId : originId;
-
-    const temp: Record<string, UserInfo> = deepCopy(prev);
-
-    
-    if (temp[chatId]) {
-      temp[chatId].messages.push({
-        content: text,
-        owner,
-        timestamp
-      });
-      
-      console.log(selectedUser, chatId);
-      if (selectedUser != chatId && !owner) {
-        temp[chatId].unreadCount += 1;
-      }
-    }
-
-    return temp;
-  }, [selectedUser, user]);
-
-  // const cbcb = useCallback(({ originId, destinationId, text, timestamp }) => , [cb])
-
   useEffect(() => {
     if (!user) return history.push(routersDefinitions.login);
 
@@ -103,9 +78,30 @@ const Home = (): React.ReactElement => {
     socket.off("message");
     socket.on("message", ({ originId, destinationId, text, timestamp }) => {
       console.log(originId, destinationId, text);
-      setUsersInfo(prev => cb({ originId, destinationId, text, timestamp }, prev));
+      setUsersInfo(prev => {
+        const owner = originId == user?.id;
+        const chatId = owner ? destinationId : originId;
+    
+        const temp: Record<string, UserInfo> = deepCopy(prev);
+    
+        
+        if (temp[chatId]) {
+          temp[chatId].messages.push({
+            content: text,
+            owner,
+            timestamp
+          });
+          
+          console.log(selectedUser, chatId);
+          if (selectedUser != chatId && !owner) {
+            temp[chatId].unreadCount += 1;
+          }
+        }
+    
+        return temp;
+      });
     });
-  }, [user, cb]);
+  }, [user, selectedUser]);
 
   const _onSendClick = (msg: string) => {
     if (msg === '' && !currentMessage) return
