@@ -67,7 +67,7 @@ const Home = (): React.ReactElement => {
   useEffect(() => {
     if (!user) return history.push(routersDefinitions.login);
 
-    socket = io('ws://localhost:4018/', { query: {id: String(user.id)} });
+    socket = io(`${process.env.REACT_APP_SOCKET_PATH}`, { query: {id: String(user.id)} });
 
     return () => { socket.disconnect() }
   }, [user]);
@@ -81,23 +81,23 @@ const Home = (): React.ReactElement => {
       setUsersInfo(prev => {
         const owner = originId == user?.id;
         const chatId = owner ? destinationId : originId;
-    
+
         const temp: Record<string, UserInfo> = deepCopy(prev);
-    
-        
+
+
         if (temp[chatId]) {
           temp[chatId].messages.push({
             content: text,
             owner,
             timestamp
           });
-          
+
           console.log(selectedUser, chatId);
           if (selectedUser != chatId && !owner) {
             temp[chatId].unreadCount += 1;
           }
         }
-    
+
         return temp;
       });
     });

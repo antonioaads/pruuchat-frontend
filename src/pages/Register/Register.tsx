@@ -43,7 +43,7 @@ const Register = (): React.ReactElement => {
   const register = async () => {
     if (values.password === values.confirmPassword)
       await axios
-        .post("http://localhost:4018/users", {
+        .post(`${process.env.REACT_APP_BASE_PATH}/users`, {
           name: values.name,
           email: values.email,
           password: values.password,

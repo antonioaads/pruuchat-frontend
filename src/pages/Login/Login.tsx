@@ -43,7 +43,7 @@ const Login = (): React.ReactElement => {
 
   const login = async () => {
     await axios
-      .post("http://localhost:4018/auth", {
+      .post(`${process.env.REACT_APP_BASE_PATH}/auth`, {
         email: values.email,
         password: values.password,
       })
