@@ -18,3 +18,9 @@ rá rodar o build da aplicação, gerando a pasta `build`.\
 ### `yarn lint`
 
 Executa as regras de lint da aplicação
+
+## Itens extras
+
+- [x]  **(7%) Todas as páginas *responsive***
+- [x]  **(5%) Organização em componentes**
+
