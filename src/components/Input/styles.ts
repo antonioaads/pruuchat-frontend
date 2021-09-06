@@ -6,7 +6,7 @@ export const Label = styled.label`
   font-weight: 500;
 `;
 
-export const Input = styled.input`
+export const InputStyled = styled.input`
   border: 2px solid var(--color-main-pruurple);
   padding: 12px 20px;
   border-radius: 5px;

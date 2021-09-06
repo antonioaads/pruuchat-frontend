@@ -3,39 +3,78 @@ import Avatar from "../Avatar";
 import Button from "../Button";
 import Input from "../Input";
 import Close from "../../assets/close.svg";
+import { IUser } from "../../provider/UserProvider";
+import React from "react";
+import api from "../../api";
 
 interface EditUserProps {
-  closeCallback: () => void;
+  user: IUser | null;
+  closeCallback: (hasEditedUser: boolean, editedUser?: EditUserState) => void;
 }
 
-const EditUser = ({closeCallback}: EditUserProps): React.ReactElement => {
-  const fakeUser = {
-    fullname: "Guilherme Giacomin",
-    profilePictureUrl: "https://avatars.githubusercontent.com/u/54778237?v=4",
+export interface EditUserState {
+  name: string;
+  email: string;
+}
+
+const EditUser = ({
+  closeCallback,
+  user,
+}: EditUserProps): React.ReactElement => {
+  const [values, setValues] = React.useState<EditUserState>({
+    name: user?.name || "",
+    email: user?.email || "",
+  });
+
+  const handleChange =
+    (prop: keyof EditUserState) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+
+  const handleEdit = async () => {
+    await api
+      .editUser(user?.token || "", user?.id || 0, values)
+      .then(() => {
+        closeCallback(true, values);
+      })
+      .catch((error) => {
+        console.error(error);
+        closeCallback(false);
+      });
   };
+
   return (
     <Container>
       <img
         src={Close}
         alt="Close icon"
         className="close-icon"
-        onClick={closeCallback}
+        onClick={() => {
+          closeCallback(false);
+        }}
       />
       <Avatar
-        fullName={fakeUser.fullname}
-        profilePictureUrl={fakeUser.profilePictureUrl}
+        fullName={user?.name || ""}
+        profilePictureUrl={user?.picture || ""}
         size="x-large"
       />
-      <p className="fullname">{fakeUser.fullname}</p>
+      <p className="fullname">{user?.name || ""}</p>
 
       <div className="form-container">
-        <Input label="Apelido"></Input>
-        <Input label="Email"></Input>
-        <Input label="Telefone"></Input>
-        <Input label="Status"></Input>
+        <Input
+          label="Name"
+          defaultValue={user?.name || ""}
+          onChange={handleChange("name")}
+        ></Input>
+        <Input
+          label="Email"
+          defaultValue={user?.email || ""}
+          onChange={handleChange("email")}
+        ></Input>
       </div>
 
-      <Button className="btn-save" color="secundary">
+      <Button className="btn-save" color="secundary" onClick={handleEdit}>
         Salvar
       </Button>
     </Container>
