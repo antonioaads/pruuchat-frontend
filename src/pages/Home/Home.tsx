@@ -13,7 +13,7 @@ import routersDefinitions from "../../utils/routersDefinitions";
 import io, { Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import deepCopy from "../../utils/deepCopy";
-
+import { EditUserState } from "../../components/EditUser/EditUser";
 
 export type UserInfo = {
   user: IUser;
@@ -21,21 +21,40 @@ export type UserInfo = {
   unreadCount: number;
 };
 
-let socket: Socket<DefaultEventsMap, DefaultEventsMap>
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 const Home = (): React.ReactElement => {
   const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
 
   const [profileSelected, setProfileSelected] = useState<boolean>(false);
 
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const history = useHistory();
   const [usersInfo, setUsersInfo] = useState<Record<string, UserInfo>>({});
   const [selectedUser, setSelectedUser] = useState<number>(1);
 
+  const handleEditedUser = (
+    hasEditedUser: boolean,
+    editedUser?: EditUserState
+  ) => {
+    setProfileSelected(false);
+
+    if (hasEditedUser && editedUser) {
+      const newUser: IUser = {
+        id: user?.id || 0,
+        token: user?.token || "",
+        active: user?.active || false,
+        picture: user?.picture || "",
+        email: editedUser.email,
+        name: editedUser.name,
+      };
+      setUser(newUser);
+    }
+  };
+
   const updateSelectedUser = (id: number) => {
     setSelectedUser(id);
-    setUsersInfo(prev => {
+    setUsersInfo((prev) => {
       const temp = deepCopy(prev);
       if (usersInfo[id]) {
         usersInfo[id].unreadCount = 0;
@@ -48,28 +67,34 @@ const Home = (): React.ReactElement => {
   useEffect(() => {
     let isMounted = true;
     if (user) {
-      api.getFriends(user.token)
-        .then(list => {
-          if (isMounted) {
-            const temp: Record<string, UserInfo> = {};
-            list.forEach(u => temp[u.id] = {
-              user: u,
-              messages: [],
-              unreadCount: 0
-            })
-            setUsersInfo(temp);
-          }
-        });
+      api.getFriends(user.token).then((list) => {
+        if (isMounted) {
+          const temp: Record<string, UserInfo> = {};
+          list.forEach(
+            (u) =>
+              (temp[u.id] = {
+                user: u,
+                messages: [],
+                unreadCount: 0,
+              })
+          );
+          setUsersInfo(temp);
+        }
+      });
     }
-    return () => { isMounted = false };
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
     if (!user) return history.push(routersDefinitions.login);
 
-    socket = io('ws://localhost:4018/', { query: {id: String(user.id)} });
+    socket = io("ws://localhost:4018/", { query: { id: String(user.id) } });
 
-    return () => { socket.disconnect() }
+    return () => {
+      socket.disconnect();
+    };
   }, [user]);
 
   useEffect(() => {
@@ -78,39 +103,38 @@ const Home = (): React.ReactElement => {
     socket.off("message");
     socket.on("message", ({ originId, destinationId, text, timestamp }) => {
       console.log(originId, destinationId, text);
-      setUsersInfo(prev => {
+      setUsersInfo((prev) => {
         const owner = originId == user?.id;
         const chatId = owner ? destinationId : originId;
-    
+
         const temp: Record<string, UserInfo> = deepCopy(prev);
-    
-        
+
         if (temp[chatId]) {
           temp[chatId].messages.push({
             content: text,
             owner,
-            timestamp
+            timestamp,
           });
-          
+
           console.log(selectedUser, chatId);
           if (selectedUser != chatId && !owner) {
             temp[chatId].unreadCount += 1;
           }
         }
-    
+
         return temp;
       });
     });
   }, [user, selectedUser]);
 
   const _onSendClick = (msg: string) => {
-    if (msg === '' && !currentMessage) return
+    if (msg === "" && !currentMessage) return;
 
     socket.emit("chat", {
       originId: user?.id,
       destinationId: selectedUser,
-      text: msg
-    })
+      text: msg,
+    });
 
     setCurrentMessage(null);
 
@@ -147,12 +171,15 @@ const Home = (): React.ReactElement => {
       <div className="empty-purple-space"></div>
       <div className="page-content">
         <SideCard
-          content={profileSelected
-            ? <EditUser closeCallback={() => setProfileSelected(false)}/>
-            : <ChatList
+          content={
+            profileSelected ? (
+              <EditUser closeCallback={handleEditedUser} user={user} />
+            ) : (
+              <ChatList
                 usersInfo={usersInfo}
                 setSelectedUser={updateSelectedUser}
               />
+            )
           }
         />
         <Chat

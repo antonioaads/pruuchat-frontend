@@ -1,19 +1,20 @@
-import { Label, Input } from "./styles";
+import { Label, InputStyled } from "./styles";
 
-interface ButtonProps {
+interface InputProps {
   label: string;
+  defaultValue?: string;
   type?: string;
 }
 
-const Button: React.FC<ButtonProps & React.HTMLAttributes<HTMLInputElement>> = (
-  props: ButtonProps & React.HTMLAttributes<HTMLInputElement>
+const Input: React.FC<InputProps & React.HTMLAttributes<HTMLInputElement>> = (
+  props: InputProps & React.HTMLAttributes<HTMLInputElement>
 ) => {
   return (
     <>
       <Label>{props.label}</Label>
-      <Input {...props}></Input>
+      <InputStyled defaultValue={props.defaultValue} {...props}></InputStyled>
     </>
   );
 };
 
-export default Button;
+export default Input;
